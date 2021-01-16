@@ -1,3 +1,4 @@
 ignored:
   - SC2086
   - DL3008
+  - DL4001

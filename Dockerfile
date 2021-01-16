@@ -33,10 +33,10 @@ USER me
 WORKDIR /home/me
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN wget "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh" -O - | zsh \
-      && git clone --depth=1 "https://github.com/romkatv/powerlevel10k.git" ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k \
-      && git clone "https://github.com/jimeh/tmux-themepack.git" ~/.tmux-themepack
+RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh \
+      && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k \
+      && git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack
 
-RUN url -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
+RUN curl -sLf https://spacevim.org/install.sh | bash -s -- --install neovim
 
 CMD ["tmux", "-u", "-2"]
