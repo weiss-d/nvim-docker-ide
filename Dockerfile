@@ -15,6 +15,7 @@ RUN apt-get update \
         neovim \
         tmux \
         ca-certificates \
+        locales \
 # Python dev dependencies
         make \
         build-essential \
@@ -31,6 +32,11 @@ RUN apt-get update \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+# RUN apt-get remove -y locales
 
 # Adding a user, and making him available to do sudo w/o password
 RUN useradd -ms /bin/zsh me \
