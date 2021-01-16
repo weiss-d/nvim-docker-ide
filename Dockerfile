@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
       && apt-get install -y --no-install-recommends \
+# Base software set
         sudo \
         git \
         curl \
@@ -13,9 +14,8 @@ RUN apt-get update \
         fzf \
         neovim \
         tmux \
-        # needed for ohmyzsh
-        bsdmainutils \
         ca-certificates \
+# Python dev dependencies
         make \
         build-essential \
         libssl-dev \
@@ -23,14 +23,11 @@ RUN apt-get update \
         libbz2-dev \
         libreadline-dev \
         libsqlite3-dev \
-        # llvm \
-        # libncurses5-dev \
-        # libncursesw5-dev \
-        # xz-utils \
         tk-dev \
         libffi-dev \
         liblzma-dev \
-        # python-openssl \
+# Needed for ohmyzsh
+        bsdmainutils \
       && apt-get clean \
       && rm -rf /var/lib/apt/lists/*
 
@@ -50,7 +47,9 @@ WORKDIR /home/me
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh \
       && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k \
+# Installing Tmux themes
       && git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack \
+# Installing asdf and Python
       && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0 \
       && echo ". $HOME/.asdf/asdf.sh" >> .zshrc \
       && echo ". $HOME/.asdf/asdf.sh" >> .bashrc \
@@ -58,6 +57,7 @@ RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -
       && asdf plugin add python \
       && asdf install python latest:3.8 \
       && asdf global python $(asdf list python) \
+# Installing Vim config
       && git clone git://github.com/rafi/vim-config.git ~/.config/nvim \
       && pip install --user --no-cache-dir pynvim PyYAML \
       && cd ~/.config/nvim \
