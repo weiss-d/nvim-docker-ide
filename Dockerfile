@@ -60,8 +60,8 @@ RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -
       && asdf global python $(asdf list python) \
       && git clone git://github.com/rafi/vim-config.git ~/.config/nvim \
       && pip install --user --no-cache-dir pynvim PyYAML \
-WORKDIR ~/.config/nvim
-RUN make
+      && cd ~/.config/nvim \
+      && make
 
 WORKDIR /home/me
 
