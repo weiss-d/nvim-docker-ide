@@ -10,10 +10,12 @@ RUN apt-get update \
         git \
         curl \
         wget \
+        less \
         zsh \
         fzf \
         neovim \
         tmux \
+        pipx \
         ca-certificates \
         locales \
 # Python dev dependencies
