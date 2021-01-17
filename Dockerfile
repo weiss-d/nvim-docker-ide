@@ -69,7 +69,12 @@ RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -
       && git clone git://github.com/rafi/vim-config.git ~/.config/nvim \
       && pip install --user --no-cache-dir pynvim PyYAML \
       && cd ~/.config/nvim \
-      && make
+      && make \
+# Installing Poetry
+      && curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - \
+# Installing some useful stuff from PyPI
+      && pip install --no-cache-dir black isort
+      # && pipx install bpytop
 
 WORKDIR /home/me
 
