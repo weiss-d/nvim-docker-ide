@@ -9,26 +9,13 @@ RUN apt-get update \
         sudo \
         git \
         curl \
-        wget \
         less \
         zsh \
-        fzf \
         neovim \
         tmux \
         pipx \
         ca-certificates \
         locales \
-# Python dev dependencies
-        make \
-        build-essential \
-        libssl-dev \
-        zlib1g-dev \
-        libbz2-dev \
-        libreadline-dev \
-        libsqlite3-dev \
-        tk-dev \
-        libffi-dev \
-        liblzma-dev \
 # Needed for ohmyzsh
         bsdmainutils \
       && apt-get clean \
@@ -53,27 +40,15 @@ USER me
 WORKDIR /home/me
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh \
-      && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k \
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
 # Installing Tmux themes
       && git clone https://github.com/jimeh/tmux-themepack.git ~/.tmux-themepack \
 # Installing asdf and Python
-      && git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0 \
+      && git clone --depth=1 https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0 \
       && echo ". $HOME/.asdf/asdf.sh" >> .zshrc \
       && echo ". $HOME/.asdf/asdf.sh" >> .bashrc \
-      && source $HOME/.asdf/asdf.sh \
-      && asdf plugin add python \
-      && asdf install python latest:3.8 \
-      && asdf global python $(asdf list python) \
 # Installing Vim config
-      && git clone git://github.com/rafi/vim-config.git ~/.config/nvim \
-      && pip install --user --no-cache-dir pynvim PyYAML \
-      && cd ~/.config/nvim \
-      && make \
-# Installing Poetry
-      && curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - \
 # Installing some useful stuff from PyPI
-      && pip install --no-cache-dir black isort
       # && pipx install bpytop
 
 WORKDIR /home/me
